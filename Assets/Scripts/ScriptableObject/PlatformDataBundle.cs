@@ -5,9 +5,19 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Platform Data Bundle", menuName = "ObjectSetting/Data/PlatformDataBundle", order = 51)]
 public class PlatformDataBundle : ScriptableObject
 {
-    [SerializeField] private List<PlatformData> _platformsData;
+    [SerializeField] private List<PlatformData> _platformData;
 
-    public List<PlatformData> PlatformsData => _platformsData;
+    public PlatformData GetRandomData()
+    {
+        if (_platformData.Count != 0)
+        {
+            int index = UnityEngine.Random.Range(0, _platformData.Count);
+
+            return _platformData[index];
+        }
+
+        return null;
+    }
 }
 
 [Serializable]

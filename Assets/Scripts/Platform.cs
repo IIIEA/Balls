@@ -4,14 +4,8 @@ using UnityEngine;
 [RequireComponent(typeof(Renderer))]
 public class Platform : MonoBehaviour
 {
-    private TMP_Text _value;
-    private Renderer _renderer;
-
-    private void Start()
-    {
-        _renderer = GetComponent<Renderer>();
-        _value = GetComponentInChildren<TMP_Text>();
-    }
+    [SerializeField] private TMP_Text _value;
+    [SerializeField] private Renderer _renderer;
 
     public void Init(int value, Color color)
     {
