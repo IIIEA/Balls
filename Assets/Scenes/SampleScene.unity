@@ -136,7 +136,7 @@ GameObject:
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -280,6 +280,7 @@ GameObject:
   - component: {fileID: 886850899}
   - component: {fileID: 886850900}
   - component: {fileID: 886850901}
+  - component: {fileID: 886850902}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -420,8 +421,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 245335efa0b3b6f4585de66d924fd870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _additionalVelocity: 0
   _step: 1
+--- !u!114 &886850902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 886850893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26d0d8b16592e6d4c82348021b7390e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ballPrefab: {fileID: 6643451722231863683, guid: 78bd8b1b3410ae74aa80cb7ee020819f, type: 3}
+  _gap: 5
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
