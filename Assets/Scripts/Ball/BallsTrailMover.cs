@@ -3,7 +3,7 @@ using UnityEngine;
 public class BallsTrailMover : MonoBehaviour
 {
     [SerializeField] private BallSpawner _ballSpawner;
-    [SerializeField] private Transform _leaderBallPosition;
+    [SerializeField] private Transform _followTarget;
     [SerializeField] private float _gap;
 
     private void FixedUpdate()
@@ -13,7 +13,7 @@ public class BallsTrailMover : MonoBehaviour
 
     private void Move()
     {
-        var previousPosition = _leaderBallPosition.position;
+        var previousPosition = _followTarget.position;
 
         foreach (var ball in _ballSpawner.Balls)
         {

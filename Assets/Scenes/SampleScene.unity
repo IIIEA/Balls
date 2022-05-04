@@ -410,6 +410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _force: 12
+  _fallMultiplier: 2
 --- !u!114 &886850901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -422,7 +423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 245335efa0b3b6f4585de66d924fd870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _step: 1
+  _step: 0.5
 --- !u!114 &886850902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -449,7 +450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ballSpawner: {fileID: 886850902}
-  _leaderBallPosition: {fileID: 886850897}
+  _followTarget: {fileID: 886850897}
   _gap: 10
 --- !u!1 &963194225
 GameObject:
