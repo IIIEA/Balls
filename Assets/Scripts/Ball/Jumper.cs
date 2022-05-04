@@ -32,7 +32,7 @@ public class Jumper : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(_rigidbody.velocity.y < 0)
+        if (_rigidbody.velocity.y < 0)
         {
             _rigidbody.velocity += Vector3.up * Physics.gravity.y * _fallMultiplier * Time.deltaTime;
         }
@@ -40,7 +40,7 @@ public class Jumper : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.layer == 6)
+        if (collision.gameObject.layer == 6)
         {
             _isGrounded = true;
         }
