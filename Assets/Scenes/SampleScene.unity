@@ -395,7 +395,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _direction: {x: 0, y: 0, z: 1}
-  _speed: 10
+  _speed: 2
 --- !u!114 &886850900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,7 +408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41a0c97db29ab354e90efc1375839e97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _force: 12
+  _force: 5
 --- !u!114 &886850901
 MonoBehaviour:
   m_ObjectHideFlags: 0
