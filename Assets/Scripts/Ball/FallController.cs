@@ -4,7 +4,7 @@ public class FallController : MonoBehaviour
 {
     [SerializeField] private float _step;
 
-    private Rigidbody _rigidbody;
+    private Rigidbody _rigidbody = null;
 
     private void Start()
     {
