@@ -8,9 +8,9 @@ public class ShakeEffect : MonoBehaviour
 
     private bool _isPlayed = false;
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.GetComponent<Jumper>())
+        if (other.gameObject.GetComponent<PhysicsJump>())
         {
             if (_isPlayed == false)
                 DoShake();
