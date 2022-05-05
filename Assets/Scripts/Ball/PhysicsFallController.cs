@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class FallController : MonoBehaviour
+[RequireComponent(typeof(PhysicsJump))]
+public class PhysicsFallController : MonoBehaviour
 {
     [SerializeField] private float _step;
 
