@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Jumper : MonoBehaviour
+public class PhysicsJump : MonoBehaviour
 {
     [SerializeField] private float _force;
     [SerializeField] private float _fallMultiplier;

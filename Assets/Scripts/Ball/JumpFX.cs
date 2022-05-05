@@ -7,15 +7,21 @@ public class JumpFX : MonoBehaviour
     [SerializeField] private float _height = 5;
 
     private float _expiredTime;
+    private Keyframe[] _yKeyFrames;
 
-    private void FixedUpdate()
+    private void Start()
+    {
+        _yKeyFrames = _yAnimation.keys;
+    }
+
+    private void Update()
     {
         StartJump();
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.layer == 6)
+    private void OnTriggerEnter(Collider other)
+{
+        if (other.gameObject.layer == 6)
         {
             _expiredTime = 0;
         }
