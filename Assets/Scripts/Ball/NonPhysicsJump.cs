@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,7 +8,7 @@ public class NonPhysicsJump : MonoBehaviour
     [SerializeField] private float _height;
 
     private Vector3 _velocity;
-    [SerializeField]private bool _isGrounded;
+    private bool _isGrounded;
 
     private UnityAction TouchedGround;
 
@@ -32,10 +30,13 @@ public class NonPhysicsJump : MonoBehaviour
             pos.y += _velocity.y * Time.deltaTime;
             _velocity.y += _gravity * Time.deltaTime;
 
-            TouchedGround += OnGroundTouched;
-
             transform.position = new Vector3(0, pos.y, transform.position.z);
         }
+    }
+
+    private void OnEnable()
+    {
+        TouchedGround += OnGroundTouched;
     }
 
     private void OnDisable()
