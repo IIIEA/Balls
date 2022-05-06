@@ -71,12 +71,12 @@ public class NonPhysicsJump : MonoBehaviour
 
         if (_velocity.y > 0)
         {
-            _velocity.y = 0;
+            _velocity.y = Mathf.Lerp(_velocity.y, 0, 0.1f * Time.deltaTime);
         }
 
-        if (_gravityScale <= 2)
+        if (_gravityScale <= 4)
         {
-            _gravityScale += Time.deltaTime;
+            _gravityScale += 2 * Time.deltaTime;
         }
 
     }
