@@ -15,7 +15,7 @@ public class NonPhysicsJump : MonoBehaviour
     private Vector3 _velocity;
     private bool _isGrounded;
 
-    private UnityAction TouchedGround;
+    public UnityAction<Vector3> TouchedGround;
 
     private void Update()
     {
@@ -62,7 +62,7 @@ public class NonPhysicsJump : MonoBehaviour
     {
         if(other.gameObject.layer == 6)
         {
-            TouchedGround?.Invoke();
+            TouchedGround?.Invoke(transform.position);
         }
     }
 
@@ -81,7 +81,7 @@ public class NonPhysicsJump : MonoBehaviour
 
     }
 
-    private void OnGroundTouched()
+    private void OnGroundTouched(Vector3 groundContactPosition)
     {
         _isGrounded = true;
     }
