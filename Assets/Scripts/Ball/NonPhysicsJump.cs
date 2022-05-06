@@ -3,7 +3,12 @@ using UnityEngine.Events;
 
 public class NonPhysicsJump : MonoBehaviour
 {
+    [Header("Links")]
+    [SerializeField] private TouchDetector _touchDetector = null;
+    [Header("Parameters")]
     [SerializeField] private float _gravity;
+    [Range(1,2)]
+    [SerializeField] private float _gravityScale;
     [SerializeField] private float _jumpVelocity;
     [SerializeField] private float _height;
 
@@ -17,6 +22,7 @@ public class NonPhysicsJump : MonoBehaviour
         if (_isGrounded)
         {
             _isGrounded = false;
+            _gravityScale = 1;
             _velocity.y = _jumpVelocity;
         }
     }
@@ -28,19 +34,27 @@ public class NonPhysicsJump : MonoBehaviour
         if(_isGrounded == false)
         {
             pos.y += _velocity.y * Time.deltaTime;
-            _velocity.y += _gravity * Time.deltaTime;
+            _velocity.y += _gravity * _gravityScale * Time.deltaTime;
 
             transform.position = new Vector3(0, pos.y, transform.position.z);
+        }
+
+        if(transform.position.y <= 1f)
+        {
+            transform.position = new Vector3(0, 1f, transform.position.z);
+            _isGrounded = true;
         }
     }
 
     private void OnEnable()
     {
+        _touchDetector.Touched += OnTouched;
         TouchedGround += OnGroundTouched;
     }
 
     private void OnDisable()
     {
+        _touchDetector.Touched -= OnTouched;
         TouchedGround -= OnGroundTouched;    
     }
 
@@ -50,6 +64,21 @@ public class NonPhysicsJump : MonoBehaviour
         {
             TouchedGround?.Invoke();
         }
+    }
+
+    private void OnTouched()
+    {
+
+        if (_velocity.y > 0)
+        {
+            _velocity.y = 0;
+        }
+
+        if (_gravityScale <= 2)
+        {
+            _gravityScale += Time.deltaTime;
+        }
+
     }
 
     private void OnGroundTouched()
