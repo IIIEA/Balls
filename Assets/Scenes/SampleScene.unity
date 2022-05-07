@@ -158,9 +158,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _touchDetector: {fileID: 1135409167}
-  _gravity: -50
+  _gravity: -45
   _gravityScale: 1
-  _jumpVelocity: 35
+  _jumpVelocity: 15
+  _additionJumpCoef: 5
   _height: 0
 --- !u!114 &573854145
 MonoBehaviour:
