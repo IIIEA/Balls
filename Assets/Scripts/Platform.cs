@@ -9,7 +9,15 @@ public class Platform : MonoBehaviour
 
     public void Init(int value, Color color)
     {
-        _value.text = value.ToString();
+        if (value > 0)
+        {
+            _value.text = "+" + value.ToString();
+        }
+        else
+        {
+            _value.text = value.ToString();
+        }
+
         _renderer.material.color = color;
     }
 }
