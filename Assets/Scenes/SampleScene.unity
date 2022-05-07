@@ -258,7 +258,7 @@ GameObject:
   - component: {fileID: 664099431}
   - component: {fileID: 664099430}
   m_Layer: 0
-  m_Name: Spawner
+  m_Name: Level
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -281,6 +281,10 @@ MonoBehaviour:
   _platformData: {fileID: 11400000, guid: b714654c4c5fe16468cf2cbea82de91b, type: 2}
   _spawnPosition: 0
   _startPlatformsCount: 25
+  _countStages: 3
+  _spaceBetweenStages: 2
+  _negativePlatformChance: 10
+  _chanceAddStep: 10
 --- !u!4 &664099431
 Transform:
   m_ObjectHideFlags: 0

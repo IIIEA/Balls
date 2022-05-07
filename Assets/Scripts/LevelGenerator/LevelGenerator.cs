@@ -9,40 +9,64 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private float _spawnPosition = 0;
     [Min(0)]
     [SerializeField] private int _startPlatformsCount = 25;
+    [Min(1)]
+    [SerializeField] private int _countStages = 4;
+    [Range(1,3)]
+    [SerializeField] private int _spaceBetweenStages = 2;
+    [Range(0,10)]
+    [SerializeField] private int _negativePlatformChance;
+    [SerializeField] private int _chanceAddStep;
 
     private List<Platform> _activePlatforms = new List<Platform>();
 
     private void Start()
     {
-        for (int i = 0; i < _startPlatformsCount; i++)
+        Generate();
+    }
+
+    private void Generate()
+    {
+        for (int i = 0; i < _countStages; i++)
         {
-            SpawnPlatform();
+            for (int j = 0; j < _startPlatformsCount; j++)
+            {
+                SpawnPlatform(_negativePlatformChance);
+            }
+
+            _negativePlatformChance += _chanceAddStep;
+            _spawnPosition += _platformPrefab.transform.localScale.z * _spaceBetweenStages;
         }
     }
 
-    private void Update()
+    private void SpawnPlatform(int chance)
     {
-        if(_playerTransform.position.z - _startPlatformsCount > _spawnPosition - (_startPlatformsCount * _platformPrefab.transform.localScale.z))
-        {
-            SpawnPlatform();
-            DeletePlatform();
-        }
-    }
+        var allRandom = Random.Range(1,101);
 
-    private void SpawnPlatform()
-    {
-        var platformData = _platformData.GetRandomData();
         var platform = Instantiate(_platformPrefab, transform.forward * _spawnPosition, transform.rotation);
+
+        PlatformData platformData;
+
+        if(allRandom <= chance)
+        {
+            do
+            {
+                platformData = _platformData.GetRandomData();
+            } 
+            while (platformData.Value >= 0);
+        }
+        else
+        {
+            do
+            {
+                platformData = _platformData.GetRandomData();
+            }
+            while (platformData.Value <= 0);
+        }
+
         platform.Init(platformData.Value, platformData.Color);
 
         _activePlatforms.Add(platform);
 
         _spawnPosition += _platformPrefab.transform.localScale.z;
-    }
-
-    private void DeletePlatform()
-    {
-        Destroy(_activePlatforms[0].gameObject);
-        _activePlatforms.RemoveAt(0);
     }
 }
