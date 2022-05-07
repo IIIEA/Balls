@@ -10,9 +10,6 @@ public class BallsTrail : MonoBehaviour
     private List<Transform> _balls = new List<Transform>();
     private List<Vector3> _positions = new List<Vector3>();
 
-    public List<Vector3> Positions => _positions;
-    public List<Transform> Balls => _balls;
-
     public UnityAction<int> CountBallsChanged = null;
 
     private void Start()
@@ -45,9 +42,20 @@ public class BallsTrail : MonoBehaviour
     {
         if(other.TryGetComponent<Platform>(out Platform platform))
         {
-            for (int i = 0; i < platform.Value; i++)
+
+            if (platform.Value > 0)
             {
-                AddBall();
+                for (int i = 0; i < platform.Value; i++)
+                {
+                    AddBall();
+                }
+            }
+            else
+            {
+                for (int i = 0; i < Mathf.Abs(platform.Value); i++)
+                {
+                    RemoveBall();
+                }
             }
 
             CountBallsChanged?.Invoke(_balls.Count + 1);
@@ -61,5 +69,12 @@ public class BallsTrail : MonoBehaviour
         _positions.Add(ball.position);
 
         CountBallsChanged?.Invoke(_balls.Count + 1);
+    }
+
+    private void RemoveBall()
+    {
+        Destroy(_balls[0].gameObject);
+        _balls.RemoveAt(0);
+        _positions.RemoveAt(1);
     }
 }
