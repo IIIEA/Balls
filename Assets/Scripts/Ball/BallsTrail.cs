@@ -1,6 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BallsTrail : MonoBehaviour
 {
@@ -13,14 +13,12 @@ public class BallsTrail : MonoBehaviour
     public List<Vector3> Positions => _positions;
     public List<Transform> Balls => _balls;
 
+    public UnityAction<int> CountBallsChanged = null;
+
     private void Start()
     {
+        CountBallsChanged?.Invoke(_balls.Count + 1);
         _positions.Add(_followBall.position);
-
-        for (int i = 0; i < 15; i++)
-        {
-            AddBall();
-        }
     }
 
     private void Update()
@@ -43,10 +41,25 @@ public class BallsTrail : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.TryGetComponent<Platform>(out Platform platform))
+        {
+            for (int i = 0; i < platform.Value; i++)
+            {
+                AddBall();
+            }
+
+            CountBallsChanged?.Invoke(_balls.Count + 1);
+        }
+    }
+
     private void AddBall()
     {
         Transform ball = Instantiate(_followBall, _positions[_positions.Count - 1], Quaternion.identity, transform);
         _balls.Add(ball);
         _positions.Add(ball.position);
+
+        CountBallsChanged?.Invoke(_balls.Count + 1);
     }
 }
