@@ -11,9 +11,8 @@ public class NonPhysicsJump : MonoBehaviour
     [Header("Jump")]
     [Range(1,2)]
     [SerializeField] private float _gravityScale;
-    [SerializeField] private float _jumpVelocity;
-    [Range(1,5)]
-    [SerializeField] private float _additionJumpCoef;
+    [SerializeField] private float _minJumpVelocity;
+    [SerializeField] private float _maxJumpVelocity;
     [SerializeField] private float _groundHeight;
 
     private Vector3 _velocity;
@@ -22,9 +21,17 @@ public class NonPhysicsJump : MonoBehaviour
 
     public float CurrentVelocity => _velocity.y;
 
+    private void OnValidate()
+    {
+        if(_minJumpVelocity > _maxJumpVelocity)
+        {
+            _minJumpVelocity = _maxJumpVelocity;
+        }
+    }
+
     private void Start()
     {
-        _currentJumpVelocity = _jumpVelocity;    
+        _currentJumpVelocity = _maxJumpVelocity;    
     }
 
     private void Update()
@@ -66,8 +73,7 @@ public class NonPhysicsJump : MonoBehaviour
     {
         if(other.TryGetComponent<Platform>(out Platform platform))
         {
-            _currentJumpVelocity = _jumpVelocity;
-            _currentJumpVelocity += _additionJumpCoef * Mathf.Abs(platform.Value);
+            _currentJumpVelocity = Remap.DoRemap(0, 6, _minJumpVelocity, _maxJumpVelocity, Mathf.Abs(platform.Value));
         }
     }
 

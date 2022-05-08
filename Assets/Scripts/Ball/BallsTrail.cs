@@ -83,29 +83,13 @@ public class BallsTrail : MonoBehaviour
             distance -= _currentGap;
         }
 
-        var gap = Remap(0, 50, _minGap, _maxGap, Mathf.Abs(_nonPhysicsJump.CurrentVelocity));
+        var gap = Remap.DoRemap(0, 50, _minGap, _maxGap, Mathf.Abs(_nonPhysicsJump.CurrentVelocity));
         _currentGap = Mathf.Lerp(_currentGap, gap, _smoothGapSpeed * Time.deltaTime);
 
         for (int i = 0; i < _balls.Count; i++)
         {
             _balls[i].position = Vector3.Lerp(new Vector3(_balls[i].position.x, _positions[i + 1].y, _positions[i + 1].z), new Vector3(_balls[i].position.x, _positions[i].y, _positions[i].z), distance / _currentGap);
         }
-    }
-
-    private float Lerp(float a, float b, float t)
-    {
-        return (1.0f - t) * a + b * t;
-    }
-
-    private float InvLerp(float a, float b, float v)
-    {
-        return (v - a) / (b - a);
-    }
-
-    private float Remap(float aMin, float aMax, float bMin, float bMax, float v)
-    {
-        float t = InvLerp(aMin, aMax, v);
-        return Lerp(bMin, bMax, t);
     }
 
     private void AddBall()
