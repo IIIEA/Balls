@@ -10,7 +10,7 @@ public class ShakeEffect : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<PhysicsJump>())
+        if (other.gameObject.GetComponent<Ball>())
         {
             if (_isPlayed == false)
                 DoShake();

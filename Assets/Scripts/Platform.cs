@@ -7,9 +7,21 @@ public class Platform : MonoBehaviour
     [SerializeField] private TMP_Text _value;
     [SerializeField] private Renderer _renderer;
 
+    public int Value { get; private set; }
+
     public void Init(int value, Color color)
     {
-        _value.text = value.ToString();
+        Value = value;
+
+        if (value > 0)
+        {
+            _value.text = "+" + value.ToString();
+        }
+        else
+        {
+            _value.text = value.ToString();
+        }
+
         _renderer.material.color = color;
     }
 }
