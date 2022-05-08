@@ -176,8 +176,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _followBall: {fileID: 886850897}
-  _gap: 1.2
-  _offset: 2
+  _gap: 0.4
+  _offset: 1
 --- !u!114 &573854146
 MonoBehaviour:
   m_ObjectHideFlags: 0

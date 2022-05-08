@@ -37,7 +37,7 @@ public class BallsTrail : MonoBehaviour
 
         for (int i = 0; i < _balls.Count; i++)
         {
-            _balls[i].position = Vector3.Lerp(_positions[i + 1], new Vector3(_positions[i + 1].x, _positions[i].y, _positions[i].z), distance / _gap);
+            _balls[i].position = Vector3.Lerp(new Vector3(_balls[i].position.x, _positions[i + 1].y, _positions[i + 1].z), new Vector3(_balls[i].position.x, _positions[i].y, _positions[i].z), distance / _gap);
         }
     }
 
@@ -67,11 +67,16 @@ public class BallsTrail : MonoBehaviour
 
     private void AddBall()
     {
-        var newPositionX = _positions[_positions.Count - 1].x + _offset;
+        var newPositionX = _positions[_positions.Count - 1].x;
 
-        if(newPositionX > _startPosX + _offset)
+        if (_balls.Count > 0)
         {
-            newPositionX = _startPosX - _offset;
+            newPositionX = _balls[_balls.Count - 1].position.x + _offset;
+
+            if (newPositionX > _startPosX + _offset)
+            {
+                newPositionX = _startPosX - _offset;
+            }
         }
 
         var targetPosition = new Vector3(newPositionX, _positions[_positions.Count - 1].y, _positions[_positions.Count - 1].z);
@@ -86,8 +91,8 @@ public class BallsTrail : MonoBehaviour
 
     private void RemoveBall()
     {
-        Destroy(_balls[0].gameObject);
-        _balls.RemoveAt(0);
-        _positions.RemoveAt(1);
+        Destroy(_balls[_balls.Count - 1].gameObject);
+        _balls.RemoveAt(_balls.Count - 1);
+        _positions.RemoveAt(_positions.Count - 1);
     }
 }
