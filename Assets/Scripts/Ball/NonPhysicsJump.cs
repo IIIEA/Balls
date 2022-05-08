@@ -38,6 +38,7 @@ public class NonPhysicsJump : MonoBehaviour
     {
         if (_isGrounded)
         {
+            _velocity.y = 0;
             _isGrounded = false;
             _gravityScale = 1;
             _velocity.y = _currentJumpVelocity;
@@ -55,8 +56,6 @@ public class NonPhysicsJump : MonoBehaviour
 
             transform.position = new Vector3(0, pos.y, transform.position.z);
         }
-
-        CheckGround();
     }
 
     private void OnEnable()
@@ -73,21 +72,10 @@ public class NonPhysicsJump : MonoBehaviour
     {
         if(other.TryGetComponent<Platform>(out Platform platform))
         {
-            _currentJumpVelocity = Remap.DoRemap(0, 6, _minJumpVelocity, _maxJumpVelocity, Mathf.Abs(platform.Value));
-        }
-    }
-
-    private void CheckGround()
-    {
-        RaycastHit hit;
-
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, _rayDistance, _groundMask))
-        {
-            if (hit.distance <= _groundHeight)
-            {
-                transform.position = new Vector3(0, _groundHeight, transform.position.z);
-                _isGrounded = true;
-            }
+            transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, _groundHeight, transform.position.z), 10f);
+            _isGrounded = true;
+            var velocity = Remap.DoRemap(0, 6, _minJumpVelocity, _maxJumpVelocity, Mathf.Abs(platform.Value));
+            _currentJumpVelocity = Mathf.Lerp(_currentJumpVelocity, velocity, 1f);
         }
     }
 

@@ -166,7 +166,6 @@ MonoBehaviour:
   _gravityScale: 1
   _minJumpVelocity: 20
   _maxJumpVelocity: 40
-  _additionJumpCoef: 5
   _groundHeight: 1
 --- !u!114 &573854145
 MonoBehaviour:
@@ -184,7 +183,7 @@ MonoBehaviour:
   _followBall: {fileID: 886850897}
   _currentGap: 0.8
   _minGap: 0.4
-  _maxGap: 1
+  _maxGap: 1.2
   _smoothGapSpeed: 10
   _offset: 1
 --- !u!114 &573854146
@@ -295,7 +294,7 @@ MonoBehaviour:
   _startPlatformsCount: 25
   _countStages: 3
   _spaceBetweenStages: 2
-  _negativePlatformChance: 10
+  _negativePlatformChance: 5
   _chanceAddStep: 10
 --- !u!4 &664099431
 Transform:
@@ -545,7 +544,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1135409166}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.586651, y: 7.7872005, z: 3.4858584}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
