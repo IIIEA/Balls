@@ -158,11 +158,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _touchDetector: {fileID: 1135409167}
-  _gravity: -45
+  _gravity: -40
+  _groundMask:
+    serializedVersion: 2
+    m_Bits: 64
+  _rayDistance: 4
   _gravityScale: 1
-  _jumpVelocity: 15
-  _additionJumpCoef: 5
-  _height: 0
+  _minJumpVelocity: 20
+  _maxJumpVelocity: 40
+  _groundHeight: 1
 --- !u!114 &573854145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,8 +179,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14efbff464a39ee4d89b7ebbe09cea04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _nonPhysicsJump: {fileID: 573854144}
   _followBall: {fileID: 886850897}
-  _gap: 1.2
+  _currentGap: 0.8
+  _minGap: 0.4
+  _maxGap: 1.2
+  _smoothGapSpeed: 10
+  _offset: 1
 --- !u!114 &573854146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,7 +294,7 @@ MonoBehaviour:
   _startPlatformsCount: 25
   _countStages: 3
   _spaceBetweenStages: 2
-  _negativePlatformChance: 10
+  _negativePlatformChance: 5
   _chanceAddStep: 10
 --- !u!4 &664099431
 Transform:
@@ -535,7 +544,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1135409166}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.586651, y: 7.7872005, z: 3.4858584}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -829,6 +838,10 @@ PrefabInstance:
     - target: {fileID: 8238997282453468713, guid: 16c4c6a4e9959324ea4b7731089afd07, type: 3}
       propertyPath: m_Name
       value: Sphere
+      objectReference: {fileID: 0}
+    - target: {fileID: 8238997282453468714, guid: 16c4c6a4e9959324ea4b7731089afd07, type: 3}
+      propertyPath: m_Constraints
+      value: 112
       objectReference: {fileID: 0}
     - target: {fileID: 8238997282453468725, guid: 16c4c6a4e9959324ea4b7731089afd07, type: 3}
       propertyPath: m_RootOrder
