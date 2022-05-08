@@ -159,10 +159,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _touchDetector: {fileID: 1135409167}
   _gravity: -45
+  _groundMask:
+    serializedVersion: 2
+    m_Bits: 64
+  _rayDistance: 4
   _gravityScale: 1
   _jumpVelocity: 15
   _additionJumpCoef: 5
-  _height: 0
+  _groundHeight: 1
 --- !u!114 &573854145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,8 +179,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14efbff464a39ee4d89b7ebbe09cea04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _nonPhysicsJump: {fileID: 573854144}
   _followBall: {fileID: 886850897}
-  _gap: 0.6
+  _currentGap: 0.8
+  _minGap: 0.4
+  _maxGap: 1
+  _smoothGapSpeed: 10
   _offset: 1
 --- !u!114 &573854146
 MonoBehaviour:
