@@ -177,6 +177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _followBall: {fileID: 886850897}
   _gap: 1.2
+  _offset: 2
 --- !u!114 &573854146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -829,6 +830,10 @@ PrefabInstance:
     - target: {fileID: 8238997282453468713, guid: 16c4c6a4e9959324ea4b7731089afd07, type: 3}
       propertyPath: m_Name
       value: Sphere
+      objectReference: {fileID: 0}
+    - target: {fileID: 8238997282453468714, guid: 16c4c6a4e9959324ea4b7731089afd07, type: 3}
+      propertyPath: m_Constraints
+      value: 112
       objectReference: {fileID: 0}
     - target: {fileID: 8238997282453468725, guid: 16c4c6a4e9959324ea4b7731089afd07, type: 3}
       propertyPath: m_RootOrder

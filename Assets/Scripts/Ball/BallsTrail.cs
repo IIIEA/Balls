@@ -6,16 +6,19 @@ public class BallsTrail : MonoBehaviour
 {
     [SerializeField] private Transform _followBall;
     [SerializeField] private float _gap;
+    [SerializeField] private float _offset;
 
     private List<Transform> _balls = new List<Transform>();
     private List<Vector3> _positions = new List<Vector3>();
 
     public UnityAction<int> CountBallsChanged = null;
+    private float _startPosX;
 
     private void Start()
     {
         CountBallsChanged?.Invoke(_balls.Count + 1);
         _positions.Add(_followBall.position);
+        _startPosX = _followBall.position.x;
     }
 
     private void Update()
@@ -34,7 +37,7 @@ public class BallsTrail : MonoBehaviour
 
         for (int i = 0; i < _balls.Count; i++)
         {
-            _balls[i].position = Vector3.Lerp(_positions[i + 1], _positions[i], distance/_gap);
+            _balls[i].position = Vector3.Lerp(_positions[i + 1], new Vector3(_positions[i + 1].x, _positions[i].y, _positions[i].z), distance / _gap);
         }
     }
 
@@ -64,7 +67,17 @@ public class BallsTrail : MonoBehaviour
 
     private void AddBall()
     {
-        Transform ball = Instantiate(_followBall, _positions[_positions.Count - 1], Quaternion.identity, transform);
+        var newPositionX = _positions[_positions.Count - 1].x + _offset;
+
+        if(newPositionX > _startPosX + _offset)
+        {
+            newPositionX = _startPosX - _offset;
+        }
+
+        var targetPosition = new Vector3(newPositionX, _positions[_positions.Count - 1].y, _positions[_positions.Count - 1].z);
+
+        Transform ball = Instantiate(_followBall, targetPosition, Quaternion.identity, transform);
+
         _balls.Add(ball);
         _positions.Add(ball.position);
 
