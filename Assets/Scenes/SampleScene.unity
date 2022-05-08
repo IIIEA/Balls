@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _followBall: {fileID: 886850897}
-  _gap: 0.4
+  _gap: 0.6
   _offset: 1
 --- !u!114 &573854146
 MonoBehaviour:

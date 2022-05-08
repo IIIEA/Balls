@@ -18,6 +18,8 @@ public class NonPhysicsJump : MonoBehaviour
     private bool _isGrounded;
     private float _currentJumpVelocity;
 
+    public float CurrentVelocity => _velocity.y;
+
     public UnityAction<Vector3> TouchedGround;
 
     private void Start()

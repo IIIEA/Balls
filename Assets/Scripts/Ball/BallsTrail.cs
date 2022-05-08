@@ -4,15 +4,34 @@ using UnityEngine.Events;
 
 public class BallsTrail : MonoBehaviour
 {
+    [Header("Links")]
+    [SerializeField] private NonPhysicsJump _nonPhysicsJump;
     [SerializeField] private Transform _followBall;
-    [SerializeField] private float _gap;
+    [Header("Gap")]
+    [SerializeField] private float _currentGap;
+    [Min(0)]
+    [SerializeField] private float _minGap;
+    [Min(0)]
+    [SerializeField] private float _maxGap;
+    [Min(0)]
+    [SerializeField] private float _smoothGapSpeed;
+    [Header("X position offset")]
     [SerializeField] private float _offset;
+
+    private float _startPosX;
 
     private List<Transform> _balls = new List<Transform>();
     private List<Vector3> _positions = new List<Vector3>();
 
     public UnityAction<int> CountBallsChanged = null;
-    private float _startPosX;
+
+    private void OnValidate()
+    {
+        if(_currentGap > _maxGap || _currentGap < _minGap)
+        {
+            _currentGap = _maxGap;
+        }
+    }
 
     private void Start()
     {
@@ -23,22 +42,7 @@ public class BallsTrail : MonoBehaviour
 
     private void Update()
     {
-        float distance = (_followBall.position - _positions[0]).magnitude;
-
-        if(distance > _gap)
-        {
-            Vector3 direction = (_followBall.position - _positions[0]).normalized;
-
-            _positions.Insert(0, _positions[0] + direction * _gap);
-            _positions.RemoveAt(_positions.Count - 1);
-
-            distance -= _gap;
-        }
-
-        for (int i = 0; i < _balls.Count; i++)
-        {
-            _balls[i].position = Vector3.Lerp(new Vector3(_balls[i].position.x, _positions[i + 1].y, _positions[i + 1].z), new Vector3(_balls[i].position.x, _positions[i].y, _positions[i].z), distance / _gap);
-        }
+        Move();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -63,6 +67,45 @@ public class BallsTrail : MonoBehaviour
 
             CountBallsChanged?.Invoke(_balls.Count + 1);
         }
+    }
+
+    private void Move()
+    {
+        float distance = (_followBall.position - _positions[0]).magnitude;
+
+        if (distance > _currentGap)
+        {
+            Vector3 direction = (_followBall.position - _positions[0]).normalized;
+
+            _positions.Insert(0, _positions[0] + direction * _currentGap);
+            _positions.RemoveAt(_positions.Count - 1);
+
+            distance -= _currentGap;
+        }
+
+        var gap = Remap(0, 50, _minGap, _maxGap, Mathf.Abs(_nonPhysicsJump.CurrentVelocity));
+        _currentGap = Mathf.Lerp(_currentGap, gap, _smoothGapSpeed * Time.deltaTime);
+
+        for (int i = 0; i < _balls.Count; i++)
+        {
+            _balls[i].position = Vector3.Lerp(new Vector3(_balls[i].position.x, _positions[i + 1].y, _positions[i + 1].z), new Vector3(_balls[i].position.x, _positions[i].y, _positions[i].z), distance / _currentGap);
+        }
+    }
+
+    private float Lerp(float a, float b, float t)
+    {
+        return (1.0f - t) * a + b * t;
+    }
+
+    private float InvLerp(float a, float b, float v)
+    {
+        return (v - a) / (b - a);
+    }
+
+    private float Remap(float aMin, float aMax, float bMin, float bMax, float v)
+    {
+        float t = InvLerp(aMin, aMax, v);
+        return Lerp(bMin, bMax, t);
     }
 
     private void AddBall()
