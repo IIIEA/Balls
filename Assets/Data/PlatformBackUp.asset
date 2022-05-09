@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51b253fd63d2c194b809f34542a5a5e7, type: 3}
+  m_Name: PlatformBackUp
+  m_EditorClassIdentifier: 
+  _platformData:
+  - _value: -6
+    _color: {r: 0.8490566, g: 0.5176471, b: 0.01201493, a: 1}
+  - _value: -5
+    _color: {r: 1, g: 0.48241168, b: 0.0039215684, a: 1}
+  - _value: -4
+    _color: {r: 1, g: 0.6238781, b: 0.0039215684, a: 1}
+  - _value: -3
+    _color: {r: 1, g: 0.7140271, b: 0.0039215684, a: 1}
+  - _value: -2
+    _color: {r: 1, g: 0.8235295, b: 0.003921569, a: 1}
+  - _value: -1
+    _color: {r: 0.7372549, g: 0.6313726, b: 0.13725491, a: 1}
+  - _value: 1
+    _color: {r: 0.16862746, g: 0.7372549, b: 0.6156863, a: 1}
+  - _value: 2
+    _color: {r: 0.003921569, g: 1, b: 1, a: 1}
+  - _value: 3
+    _color: {r: 0.027450982, g: 0.9960785, b: 0.34901962, a: 1}
+  - _value: 4
+    _color: {r: 0.16509432, g: 1, b: 0.2531645, a: 1}
+  - _value: 5
+    _color: {r: 0.06666667, g: 0.9960785, b: 0.16470589, a: 1}
+  - _value: 6
+    _color: {r: 0.10980393, g: 1, b: 0.007843138, a: 1}

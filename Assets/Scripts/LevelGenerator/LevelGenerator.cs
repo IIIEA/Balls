@@ -42,7 +42,7 @@ public class LevelGenerator : MonoBehaviour
     {
         var allRandom = Random.Range(1,101);
 
-        var platform = Instantiate(_platformPrefab, transform.forward * _spawnPosition, transform.rotation);
+        var platform = Instantiate(_platformPrefab, transform.forward * _spawnPosition, _platformPrefab.transform.rotation, transform);
 
         PlatformData platformData;
 
@@ -67,6 +67,6 @@ public class LevelGenerator : MonoBehaviour
 
         _activePlatforms.Add(platform);
 
-        _spawnPosition += _platformPrefab.transform.localScale.z;
+        _spawnPosition += platform.transform.lossyScale.x * 2;
     }
 }

@@ -7,6 +7,8 @@ public class Platform : MonoBehaviour
     [SerializeField] private TMP_Text _value;
     [SerializeField] private Renderer _renderer;
 
+    private const string ShadowColor = "_ColorDim";
+
     public int Value { get; private set; }
 
     public void Init(int value, Color color)
@@ -23,5 +25,6 @@ public class Platform : MonoBehaviour
         }
 
         _renderer.material.color = color;
+        _renderer.sharedMaterial.SetColor(ShadowColor, new Color(color.r + 0.15f, color.g, color.b + 0.15f, 1f));
     }
 }
