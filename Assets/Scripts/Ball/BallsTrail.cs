@@ -7,6 +7,7 @@ public class BallsTrail : MonoBehaviour
     [Header("Links")]
     [SerializeField] private NonPhysicsJump _nonPhysicsJump;
     [SerializeField] private Transform _followBall;
+    [SerializeField] private BallsDataBundle _ballsData;
     [Header("Gap")]
     [SerializeField] private float _currentGap;
     [Min(0)]
@@ -108,10 +109,10 @@ public class BallsTrail : MonoBehaviour
 
         var targetPosition = new Vector3(newPositionX, _positions[_positions.Count - 1].y, _positions[_positions.Count - 1].z);
 
-        Transform ball = Instantiate(_followBall, targetPosition, Quaternion.identity, transform);
+        GameObject ball = Instantiate(_ballsData.GetRandomBall(), targetPosition, Quaternion.identity, transform);
 
-        _balls.Add(ball);
-        _positions.Add(ball.position);
+        _balls.Add(ball.transform);
+        _positions.Add(ball.transform.position);
 
         CountBallsChanged?.Invoke(_balls.Count + 1);
     }
