@@ -1,30 +1,28 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class BallsTrail : MonoBehaviour
+public class BallsTrail : ObjectsPool
 {
     [Header("Links")]
     [SerializeField] private NonPhysicsJump _nonPhysicsJump;
-    [SerializeField] private Transform _followBall;
     [SerializeField] private BallsDataBundle _ballsData;
+    [SerializeField] private Transform _follow;
     [Header("Gap")]
     [SerializeField] private float _currentGap;
     [Min(0)]
-    [SerializeField] private float _minGap;
-    [Min(0)]
-    [SerializeField] private float _maxGap;
-    [Min(0)]
-    [SerializeField] private float _smoothGapSpeed;
+    [SerializeField] private float _minGap, _maxGap, _smoothGapSpeed;
     [Header("X position offset")]
     [SerializeField] private float _offset;
 
     private float _startPosX;
+    private int _score = 0;
 
     private List<Transform> _balls = new List<Transform>();
     private List<Vector3> _positions = new List<Vector3>();
 
-    public UnityAction<int> CountBallsChanged = null;
+    public UnityAction<int> Score = null;
 
     private void OnValidate()
     {
@@ -36,12 +34,14 @@ public class BallsTrail : MonoBehaviour
 
     private void Start()
     {
-        CountBallsChanged?.Invoke(_balls.Count + 1);
-        _positions.Add(_followBall.position);
-        _startPosX = _followBall.position.x;
+        _positions.Add(_follow.position);
+        _startPosX = _follow.position.x;
+        Initialize(_ballsData);
+        AddBall();
+        _score = _balls.Count;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         Move();
     }
@@ -53,10 +53,7 @@ public class BallsTrail : MonoBehaviour
 
             if (platform.Value > 0)
             {
-                for (int i = 0; i < platform.Value; i++)
-                {
-                    AddBall();
-                }
+                StartCoroutine(AddBallAsync(platform.Value));
             }
             else
             {
@@ -66,30 +63,52 @@ public class BallsTrail : MonoBehaviour
                 }
             }
 
-            CountBallsChanged?.Invoke(_balls.Count + 1);
+            _score += platform.Value;
+            Score?.Invoke(_score);
         }
+    }
+
+    public void BreakUp()
+    {
+        foreach (var ball in _balls)
+        {
+            ball.parent = null;
+
+            if (ball.gameObject.TryGetComponent<Forcer>(out Forcer forcer))
+            {
+                forcer.StartForce();
+            }
+        }
+
+        _balls.Clear();
+        _positions.Clear();
+
+        gameObject.SetActive(false);
     }
 
     private void Move()
     {
-        float distance = (_followBall.position - _positions[0]).magnitude;
-
-        if (distance > _currentGap)
+        if (_positions.Count > 0 && _balls.Count > 0)
         {
-            Vector3 direction = (_followBall.position - _positions[0]).normalized;
+            float distance = (_follow.position - _positions[0]).magnitude;
 
-            _positions.Insert(0, _positions[0] + direction * _currentGap);
-            _positions.RemoveAt(_positions.Count - 1);
+            if (distance > _currentGap)
+            {
+                Vector3 direction = (_follow.position - _positions[0]).normalized;
 
-            distance -= _currentGap;
-        }
+                _positions.Insert(0, _positions[0] + direction * _currentGap);
+                _positions.RemoveAt(_positions.Count - 1);
 
-        var gap = Remap.DoRemap(0, 50, _minGap, _maxGap, Mathf.Abs(_nonPhysicsJump.CurrentVelocity));
-        _currentGap = Mathf.Lerp(_currentGap, gap, _smoothGapSpeed * Time.deltaTime);
+                distance -= _currentGap;
+            }
 
-        for (int i = 0; i < _balls.Count; i++)
-        {
-            _balls[i].position = Vector3.Lerp(new Vector3(_balls[i].position.x, _positions[i + 1].y, _positions[i + 1].z), new Vector3(_balls[i].position.x, _positions[i].y, _positions[i].z), distance / _currentGap);
+            var gap = Remap.DoRemap(0, 50, _minGap, _maxGap, Mathf.Abs(_nonPhysicsJump.CurrentVelocity));
+            _currentGap = Mathf.Lerp(_currentGap, gap, _smoothGapSpeed * Time.deltaTime);
+
+            for (int i = 0; i < _balls.Count; i++)
+            {
+                _balls[i].position = Vector3.Lerp(new Vector3(_balls[i].position.x, _positions[i + 1].y, _positions[i + 1].z), new Vector3(_balls[i].position.x, _positions[i].y, _positions[i].z), distance / _currentGap);
+            }
         }
     }
 
@@ -109,18 +128,34 @@ public class BallsTrail : MonoBehaviour
 
         var targetPosition = new Vector3(newPositionX, _positions[_positions.Count - 1].y, _positions[_positions.Count - 1].z);
 
-        GameObject ball = Instantiate(_ballsData.GetRandomBall(), targetPosition, Quaternion.identity, transform);
+        if(TryGetObject(out GameObject ball))
+        {
+            SetBall(ball, targetPosition);
+        }
 
         _balls.Add(ball.transform);
         _positions.Add(ball.transform.position);
+    }
 
-        CountBallsChanged?.Invoke(_balls.Count + 1);
+    private void SetBall(GameObject ball, Vector3 position)
+    {
+        ball.SetActive(true);
+        ball.transform.position = position;
     }
 
     private void RemoveBall()
     {
-        Destroy(_balls[_balls.Count - 1].gameObject);
+        _balls[_balls.Count - 1].gameObject.SetActive(false);
         _balls.RemoveAt(_balls.Count - 1);
         _positions.RemoveAt(_positions.Count - 1);
+    }
+
+    private IEnumerator AddBallAsync(int value)
+    {
+        for (int i = 0; i < value; i++)
+        {
+            AddBall();
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 }

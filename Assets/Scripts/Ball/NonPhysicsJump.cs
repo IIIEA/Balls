@@ -73,7 +73,6 @@ public class NonPhysicsJump : MonoBehaviour
         if(other.TryGetComponent<Platform>(out Platform platform))
         {
             _isGrounded = true;
-            transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, _groundHeight, transform.position.z), 10f);
             var velocity = Remap.DoRemap(0, 6, _minJumpVelocity, _maxJumpVelocity, Mathf.Abs(platform.Value));
             _currentJumpVelocity = Mathf.Lerp(_currentJumpVelocity, velocity, 1f);
         }
@@ -86,9 +85,6 @@ public class NonPhysicsJump : MonoBehaviour
             _velocity.y = Mathf.Lerp(_velocity.y, 0, 6f * Time.deltaTime);
         }
 
-        if (_gravityScale <= 4)
-        {
-            _gravityScale += 2 * Time.deltaTime;
-        }
+        _gravityScale += 2 * Time.deltaTime;
     }
 }

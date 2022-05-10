@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LevelGenerator : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class LevelGenerator : MonoBehaviour
 
     private List<Platform> _activePlatforms = new List<Platform>();
 
+    public UnityAction<Vector3> LastPositionSpawned; 
+
     private void Start()
     {
         Generate();
@@ -36,6 +39,8 @@ public class LevelGenerator : MonoBehaviour
             _negativePlatformChance += _chanceAddStep;
             _spawnPosition += _platformPrefab.transform.localScale.z * _spaceBetweenStages;
         }
+
+        LastPositionSpawned?.Invoke(new Vector3(0, 0, _activePlatforms[_activePlatforms.Count - 1].gameObject.transform.position.z + _activePlatforms[0].gameObject.transform.localScale.z));
     }
 
     private void SpawnPlatform(int chance)
@@ -67,6 +72,6 @@ public class LevelGenerator : MonoBehaviour
 
         _activePlatforms.Add(platform);
 
-        _spawnPosition += platform.transform.lossyScale.x * 2;
+        _spawnPosition += platform.transform.localScale.x * 2;
     }
 }
