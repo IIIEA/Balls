@@ -70,26 +70,48 @@ public class BallsTrail : MonoBehaviour
         }
     }
 
-    private void Move()
+    public void BreakUp()
     {
-        float distance = (_followBall.position - _positions[0]).magnitude;
-
-        if (distance > _currentGap)
+        foreach (var ball in _balls)
         {
-            Vector3 direction = (_followBall.position - _positions[0]).normalized;
-
-            _positions.Insert(0, _positions[0] + direction * _currentGap);
-            _positions.RemoveAt(_positions.Count - 1);
-
-            distance -= _currentGap;
+            ball.parent = null;
+            ball.gameObject.GetComponent<SelfRotate>().enabled = false;
+            ball.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+            ball.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.forward * 10f, ForceMode.Impulse);
         }
 
-        var gap = Remap.DoRemap(0, 50, _minGap, _maxGap, Mathf.Abs(_nonPhysicsJump.CurrentVelocity));
-        _currentGap = Mathf.Lerp(_currentGap, gap, _smoothGapSpeed * Time.deltaTime);
+        _followBall.parent = null;
+        _followBall.gameObject.GetComponent<SelfRotate>().enabled = false;
+        _followBall.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+        _followBall.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.forward * 10f, ForceMode.Impulse);
 
-        for (int i = 0; i < _balls.Count; i++)
+        _balls.Clear();
+        _positions.Clear();
+    }
+
+    private void Move()
+    {
+        if (_positions.Count > 0 && _balls.Count > 0)
         {
-            _balls[i].position = Vector3.Lerp(new Vector3(_balls[i].position.x, _positions[i + 1].y, _positions[i + 1].z), new Vector3(_balls[i].position.x, _positions[i].y, _positions[i].z), distance / _currentGap);
+            float distance = (_followBall.position - _positions[0]).magnitude;
+
+            if (distance > _currentGap)
+            {
+                Vector3 direction = (_followBall.position - _positions[0]).normalized;
+
+                _positions.Insert(0, _positions[0] + direction * _currentGap);
+                _positions.RemoveAt(_positions.Count - 1);
+
+                distance -= _currentGap;
+            }
+
+            var gap = Remap.DoRemap(0, 50, _minGap, _maxGap, Mathf.Abs(_nonPhysicsJump.CurrentVelocity));
+            _currentGap = Mathf.Lerp(_currentGap, gap, _smoothGapSpeed * Time.deltaTime);
+
+            for (int i = 0; i < _balls.Count; i++)
+            {
+                _balls[i].position = Vector3.Lerp(new Vector3(_balls[i].position.x, _positions[i + 1].y, _positions[i + 1].z), new Vector3(_balls[i].position.x, _positions[i].y, _positions[i].z), distance / _currentGap);
+            }
         }
     }
 
