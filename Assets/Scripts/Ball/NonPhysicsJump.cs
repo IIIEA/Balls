@@ -86,6 +86,5 @@ public class NonPhysicsJump : MonoBehaviour
         }
 
         _gravityScale += 2 * Time.deltaTime;
-
     }
 }

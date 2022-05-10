@@ -1,3 +1,5 @@
+using DG.Tweening;
+using System.Collections;
 using UnityEngine;
 
 public class CameraFollower : MonoBehaviour
@@ -12,6 +14,7 @@ public class CameraFollower : MonoBehaviour
     [SerializeField] private float _downBorder;
 
     private Transform _currentTarget;
+    private bool _finished;
 
     private void Start()
     {
@@ -28,6 +31,14 @@ public class CameraFollower : MonoBehaviour
         }
 
         Vector3 smoothPosition = Vector3.Lerp(transform.position, positionToGo, _smoothSpeed);
+
+        if (_finished)
+        {
+            transform.DOMove(positionToGo, 2f);
+
+            return;
+        }
+
         transform.position = smoothPosition;
     }
 
@@ -43,7 +54,19 @@ public class CameraFollower : MonoBehaviour
 
     private void OnFinishTriggered()
     {
-        _offset = Vector3.Lerp(_offset, new Vector3(30, 20, -26), 100f);
+        StartCoroutine(ChangerTarget());
+    }
+
+    private IEnumerator ChangerTarget()
+    {
+        _finished = true;
+        _offset = Vector3.Lerp(_offset, new Vector3(38, 20, -18), 100f);
         _currentTarget = _targetAfterEndLevel;
+
+        yield return new WaitForSeconds(1.5f);
+
+        Vector3 direction = (transform.position - _target.position).normalized;
+
+        Debug.Log(direction);
     }
 }
