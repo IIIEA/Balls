@@ -43,6 +43,7 @@ public class CameraFollower : MonoBehaviour
 
     private void OnFinishTriggered()
     {
+        _offset = Vector3.Lerp(_offset, new Vector3(30, 20, -26), 100f);
         _currentTarget = _targetAfterEndLevel;
     }
 }

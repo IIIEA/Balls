@@ -77,16 +77,18 @@ public class BallsTrail : MonoBehaviour
             ball.parent = null;
             ball.gameObject.GetComponent<SelfRotate>().enabled = false;
             ball.gameObject.GetComponent<Rigidbody>().isKinematic = false;
-            ball.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.forward * 10f, ForceMode.Impulse);
+            ball.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.forward * 15f, ForceMode.Impulse);
         }
 
         _followBall.parent = null;
         _followBall.gameObject.GetComponent<SelfRotate>().enabled = false;
         _followBall.gameObject.GetComponent<Rigidbody>().isKinematic = false;
-        _followBall.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.forward * 10f, ForceMode.Impulse);
+        _followBall.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.forward * 15f, ForceMode.Impulse);
 
         _balls.Clear();
         _positions.Clear();
+
+        gameObject.SetActive(false);
     }
 
     private void Move()
