@@ -14,6 +14,7 @@ public class CameraFollower : MonoBehaviour
     [SerializeField] private float _downBorder;
 
     private Transform _currentTarget;
+    private Tweener _myTween;
     private bool _finished;
 
     private void Start()
@@ -35,11 +36,12 @@ public class CameraFollower : MonoBehaviour
         if (_finished)
         {
             transform.DOMove(positionToGo, 2f);
-
             return;
         }
 
         transform.position = smoothPosition;
+
+
     }
 
     private void OnEnable()
@@ -62,11 +64,9 @@ public class CameraFollower : MonoBehaviour
         _finished = true;
         _offset = Vector3.Lerp(_offset, new Vector3(38, 20, -18), 100f);
         _currentTarget = _targetAfterEndLevel;
+        _myTween = transform.DOLookAt(new Vector3(_currentTarget.position.x - _offset.x, transform.position.y, _currentTarget.position.z + _offset.z), 3f);
 
-        yield return new WaitForSeconds(1.5f);
+        yield return _myTween.WaitForCompletion();
 
-        Vector3 direction = (transform.position - _target.position).normalized;
-
-        Debug.Log(direction);
     }
 }
