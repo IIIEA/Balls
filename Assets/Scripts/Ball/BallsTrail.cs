@@ -155,6 +155,12 @@ public class BallsTrail : ObjectsPool
 
     private void RemoveBall()
     {
+        if(TryFindObject(out GameObject ball, _balls[_balls.Count - 1].gameObject))
+        {
+            var ballCells = Instantiate(_ballsData.GetBallCell(ball), _positions[0], Quaternion.identity);
+            ballCells.transform.parent = null;
+        }
+
         _balls[_balls.Count - 1].gameObject.SetActive(false);
         _balls.RemoveAt(_balls.Count - 1);
         _positions.RemoveAt(_positions.Count - 1);

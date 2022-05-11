@@ -279,7 +279,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _container: {fileID: 573854143}
-  _capacity: 250
+  _capacity: 50
   _nonPhysicsJump: {fileID: 573854144}
   _ballsData: {fileID: 11400000, guid: 9878cad3e5469014f80f33a4ec59f532, type: 2}
   _follow: {fileID: 573854149}
@@ -398,8 +398,8 @@ MonoBehaviour:
   _startPlatformsCount: 10
   _countStages: 3
   _spaceBetweenStages: 3
-  _negativePlatformChance: 0
-  _chanceAddStep: 0
+  _negativePlatformChance: 10
+  _chanceAddStep: 10
 --- !u!4 &664099431
 Transform:
   m_ObjectHideFlags: 0
