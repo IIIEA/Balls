@@ -12,8 +12,6 @@ GameObject:
   - component: {fileID: 7818174673702175083}
   - component: {fileID: 8146198859236166861}
   - component: {fileID: 7494806967381459540}
-  - component: {fileID: 4574973208837208205}
-  - component: {fileID: 2300610209073773834}
   - component: {fileID: -923181146390421106}
   m_Layer: 0
   m_Name: cactoos
@@ -101,32 +99,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!65 &4574973208837208205
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7847672604593856435}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.6, y: 0.25103, z: 0.6}
-  m_Center: {x: 0, y: 0.125515, z: 0}
---- !u!65 &2300610209073773834
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7847672604593856435}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.3879764, y: 0.56092334, z: 0.4057203}
-  m_Center: {x: 0, y: 0.5353098, z: 0}
 --- !u!64 &-923181146390421106
 MeshCollider:
   m_ObjectHideFlags: 0

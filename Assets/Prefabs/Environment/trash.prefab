@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3086560116136758417}
   - component: {fileID: 8110748693983812058}
   - component: {fileID: 739615517091732784}
-  - component: {fileID: 105190063297786417}
   - component: {fileID: 2217146298121871457}
   m_Layer: 0
   m_Name: trash
@@ -100,20 +99,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!136 &105190063297786417
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4734343457539526292}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.24649073
-  m_Height: 0.6429625
-  m_Direction: 1
-  m_Center: {x: -0.046715364, y: 0.3213828, z: -0.15136288}
 --- !u!64 &2217146298121871457
 MeshCollider:
   m_ObjectHideFlags: 0

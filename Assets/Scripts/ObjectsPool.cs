@@ -14,7 +14,9 @@ public class ObjectsPool : MonoBehaviour
     {
         for (int i = 0; i < _capacity; i++)
         {
-            GameObject spawned = Instantiate(ballsData.GetRandomBall(), _container.transform);
+            var ball = ballsData.GetRandomBall();
+            GameObject spawned = Instantiate(ball, _container.transform);
+            spawned.name = ball.name;
             spawned.SetActive(false);
 
             _pool.Add(spawned);
@@ -24,6 +26,13 @@ public class ObjectsPool : MonoBehaviour
     protected bool TryGetObject(out GameObject result)
     {
         result = _pool.First(p => p.activeSelf == false);
+
+        return result != null;
+    }
+
+    protected bool TryFindObject(out GameObject result, GameObject objectToFind)
+    {
+        result = _pool.Find(p => p == objectToFind);
 
         return result != null;
     }

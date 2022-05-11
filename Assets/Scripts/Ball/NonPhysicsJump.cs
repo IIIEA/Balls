@@ -4,6 +4,7 @@ public class NonPhysicsJump : MonoBehaviour
 {
     [Header("Links")]
     [SerializeField] private TouchDetector _touchDetector = null;
+    [SerializeField] private Restart _restart;
     [Header("Parameters")]
     [SerializeField] private float _gravity;
     [SerializeField] private LayerMask _groundMask;
@@ -47,25 +48,19 @@ public class NonPhysicsJump : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 pos = transform.position;
-
-        if(_isGrounded == false)
-        {
-            pos.y += _velocity.y * Time.deltaTime;
-            _velocity.y += _gravity * _gravityScale * Time.deltaTime;
-
-            transform.position = new Vector3(0, pos.y, transform.position.z);
-        }
+        Jump();
     }
 
     private void OnEnable()
     {
         _touchDetector.Touched += OnTouched;
+        _restart.ChangedYPosition += OnYPositionChanged;
     }
 
     private void OnDisable()
     {
         _touchDetector.Touched -= OnTouched;
+        _restart.ChangedYPosition -= OnYPositionChanged;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -76,6 +71,26 @@ public class NonPhysicsJump : MonoBehaviour
             var velocity = Remap.DoRemap(0, 6, _minJumpVelocity, _maxJumpVelocity, Mathf.Abs(platform.Value));
             _currentJumpVelocity = Mathf.Lerp(_currentJumpVelocity, velocity, 1f);
         }
+    }
+
+    private void Jump()
+    {
+        Vector3 pos = transform.position;
+
+        if (_isGrounded == false)
+        {
+            pos.y += _velocity.y * Time.deltaTime;
+            _velocity.y += _gravity * _gravityScale * Time.deltaTime;
+
+            transform.position = new Vector3(0, pos.y, transform.position.z);
+        }
+    }
+
+    private void OnYPositionChanged(float newYPosition)
+    {
+        transform.position = new Vector3(transform.position.x, newYPosition, transform.position.z);
+        _velocity.y = 0;
+        _isGrounded = true;
     }
 
     private void OnTouched()
