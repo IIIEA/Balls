@@ -155,6 +155,7 @@ MonoBehaviour:
   _target: {fileID: 2133480439}
   _targetAfterEndLevel: {fileID: 674774421}
   _finishTrigger: {fileID: 1237754152}
+  _restart: {fileID: 573854147}
   _smoothSpeed: 0.125
   _offset: {x: 20, y: 5, z: -5}
   _downBorder: 5
@@ -234,6 +235,7 @@ GameObject:
   - component: {fileID: 573854146}
   - component: {fileID: 573854145}
   - component: {fileID: 573854144}
+  - component: {fileID: 573854147}
   m_Layer: 0
   m_Name: BallTrail
   m_TagString: Untagged
@@ -254,6 +256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _touchDetector: {fileID: 1135409167}
+  _restart: {fileID: 573854147}
   _gravity: -50
   _groundMask:
     serializedVersion: 2
@@ -280,6 +283,7 @@ MonoBehaviour:
   _nonPhysicsJump: {fileID: 573854144}
   _ballsData: {fileID: 11400000, guid: 9878cad3e5469014f80f33a4ec59f532, type: 2}
   _follow: {fileID: 573854149}
+  _restart: {fileID: 573854147}
   _currentGap: 0.8
   _minGap: 0.4
   _maxGap: 1.2
@@ -299,6 +303,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _direction: {x: 0, y: 0, z: 1}
   _speed: 20
+--- !u!114 &573854147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573854143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88d4ef36fa79c4b41a82046ea8396e8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _yRestartBorder: -3
+  _newYPosition: 3
+  _delay: 1
 --- !u!135 &573854148
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -378,7 +397,7 @@ MonoBehaviour:
   _spawnPosition: 0
   _startPlatformsCount: 10
   _countStages: 3
-  _spaceBetweenStages: 1
+  _spaceBetweenStages: 3
   _negativePlatformChance: 0
   _chanceAddStep: 0
 --- !u!4 &664099431
@@ -1140,7 +1159,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4509869682019077523, guid: fcc46fc147b31bc48b70296f96bae77e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fcc46fc147b31bc48b70296f96bae77e, type: 3}

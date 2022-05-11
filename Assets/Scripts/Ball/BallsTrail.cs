@@ -9,6 +9,7 @@ public class BallsTrail : ObjectsPool
     [SerializeField] private NonPhysicsJump _nonPhysicsJump;
     [SerializeField] private BallsDataBundle _ballsData;
     [SerializeField] private Transform _follow;
+    [SerializeField] private Restart _restart;
     [Header("Gap")]
     [SerializeField] private float _currentGap;
     [Min(0)]
@@ -50,7 +51,6 @@ public class BallsTrail : ObjectsPool
     {
         if(other.TryGetComponent<Platform>(out Platform platform))
         {
-
             if (platform.Value > 0)
             {
                 StartCoroutine(AddBallAsync(platform.Value));
@@ -66,6 +66,16 @@ public class BallsTrail : ObjectsPool
             _score += platform.Value;
             Score?.Invoke(_score);
         }
+    }
+
+    private void OnEnable()
+    {
+        _restart.ChangedYPosition += OnYPositionChanged;
+    }
+
+    private void OnDisable()
+    {
+        _restart.ChangedYPosition -= OnYPositionChanged;
     }
 
     public void BreakUp()
@@ -148,6 +158,14 @@ public class BallsTrail : ObjectsPool
         _balls[_balls.Count - 1].gameObject.SetActive(false);
         _balls.RemoveAt(_balls.Count - 1);
         _positions.RemoveAt(_positions.Count - 1);
+    }
+
+    private void OnYPositionChanged(float newYPosition)
+    {
+        for (int i = 0; i < _positions.Count; i++)
+        {
+            _positions[i] = new Vector3(_positions[i].x, newYPosition, _positions[i].z);
+        }
     }
 
     private IEnumerator AddBallAsync(int value)

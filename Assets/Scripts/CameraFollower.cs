@@ -8,6 +8,7 @@ public class CameraFollower : MonoBehaviour
     [SerializeField] private Transform _target;
     [SerializeField] private Transform _targetAfterEndLevel;
     [SerializeField] private FinishTrigger _finishTrigger;
+    [SerializeField] private Restart _restart;
     [Header("Parameters")]
     [SerializeField] private float _smoothSpeed = 0.125f;
     [SerializeField] private Vector3 _offset;
@@ -16,6 +17,7 @@ public class CameraFollower : MonoBehaviour
     private Transform _currentTarget;
     private Tweener _myTween;
     private bool _finished;
+    private bool _unlockTarget;
 
     private void Start()
     {
@@ -24,39 +26,47 @@ public class CameraFollower : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 positionToGo = _currentTarget.position + _offset;
-
-        if(positionToGo.y <= _downBorder)
+        if (_unlockTarget == false)
         {
-            positionToGo = new Vector3(positionToGo.x, _downBorder, positionToGo.z);
+            Vector3 positionToGo = _currentTarget.position + _offset;
+
+            if (positionToGo.y <= _downBorder)
+            {
+                positionToGo = new Vector3(positionToGo.x, _downBorder, positionToGo.z);
+            }
+
+            Vector3 smoothPosition = Vector3.Lerp(transform.position, positionToGo, _smoothSpeed);
+
+            if (_finished)
+            {
+                transform.DOMove(positionToGo, 2f);
+                return;
+            }
+
+            transform.position = smoothPosition;
         }
-
-        Vector3 smoothPosition = Vector3.Lerp(transform.position, positionToGo, _smoothSpeed);
-
-        if (_finished)
-        {
-            transform.DOMove(positionToGo, 2f);
-            return;
-        }
-
-        transform.position = smoothPosition;
-
-
     }
 
     private void OnEnable()
     {
         _finishTrigger.FinishTriggered += OnFinishTriggered;
+        _restart.Restarted += OnRestarted;
     }
 
     private void OnDisable()
     {
         _finishTrigger.FinishTriggered -= OnFinishTriggered;
+        _restart.Restarted -= OnRestarted;
     }
 
     private void OnFinishTriggered()
     {
         StartCoroutine(ChangerTarget());
+    }
+
+    private void OnRestarted(bool restarted)
+    {
+        _unlockTarget = restarted;
     }
 
     private IEnumerator ChangerTarget()
