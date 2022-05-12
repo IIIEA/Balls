@@ -15,12 +15,12 @@ public class ValueTextSetter : MonoBehaviour
 
     private void OnEnable()
     {
-        _ballsTrail.Score += OnValueChanged;
+        _ballsTrail.ScoreChanged += OnValueChanged;
     }
 
     private void OnDisable()
     {
-        _ballsTrail.Score -= OnValueChanged;
+        _ballsTrail.ScoreChanged -= OnValueChanged;
     }
 
     private void OnValueChanged(int value)
