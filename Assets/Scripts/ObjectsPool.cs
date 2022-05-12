@@ -10,6 +10,8 @@ public class ObjectsPool : MonoBehaviour
 
     private List<GameObject> _pool = new List<GameObject>();
 
+    public int Capacity => _capacity;
+
     protected void Initialize(BallsDataBundle ballsData)
     {
         for (int i = 0; i < _capacity; i++)

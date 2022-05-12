@@ -18,12 +18,13 @@ public class BallsTrail : ObjectsPool
     [SerializeField] private float _offset;
 
     private float _startPosX;
-    private int _score = 0;
 
     private List<Transform> _balls = new List<Transform>();
     private List<Vector3> _positions = new List<Vector3>();
 
-    public UnityAction<int> Score = null;
+    public UnityAction<int> ScoreChanged = null;
+
+    public int Score { get; private set; }
 
     private void OnValidate()
     {
@@ -39,7 +40,7 @@ public class BallsTrail : ObjectsPool
         _startPosX = _follow.position.x;
         Initialize(_ballsData);
         AddBall();
-        _score = _balls.Count;
+        Score = _balls.Count;
     }
 
     private void FixedUpdate()
@@ -63,8 +64,8 @@ public class BallsTrail : ObjectsPool
                 }
             }
 
-            _score += platform.Value;
-            Score?.Invoke(_score);
+            Score += platform.Value;
+            ScoreChanged?.Invoke(Score);
         }
     }
 
