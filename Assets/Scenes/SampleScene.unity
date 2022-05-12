@@ -174,8 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32e561e1a5c6f0c4faf76e33fda6e74e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _finishTrigger: {fileID: 1237754152}
-  _ballsTrail: {fileID: 573854145}
+  _score: {fileID: 1392401658}
 --- !u!1 &14790113
 GameObject:
   m_ObjectHideFlags: 0
@@ -2330,7 +2329,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 96/250
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}

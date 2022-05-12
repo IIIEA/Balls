@@ -23,6 +23,7 @@ public class BallsTrail : ObjectsPool
     private List<Vector3> _positions = new List<Vector3>();
 
     public UnityAction<int> ScoreChanged = null;
+    public UnityAction<float, float> Disabled;
 
     public int Score { get; private set; }
 
