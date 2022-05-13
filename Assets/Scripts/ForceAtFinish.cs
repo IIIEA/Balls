@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Score : MonoBehaviour
+public class ForceAtFinish : MonoBehaviour
 {
     [SerializeField] private FinishTrigger _finish;
 
