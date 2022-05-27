@@ -39,7 +39,7 @@ public class CameraFollower : MonoBehaviour
 
             if (_finished)
             {
-                transform.DOMove(positionToGo, 2f);
+                transform.DOMove(positionToGo, 4f);
                 return;
             }
 
@@ -72,7 +72,7 @@ public class CameraFollower : MonoBehaviour
     private IEnumerator ChangerTarget()
     {
         _finished = true;
-        _offset = Vector3.Lerp(_offset, new Vector3(38, 20, -18), 100f);
+        _offset = Vector3.Lerp(_offset, new Vector3(38, 20, -18), 1f);
         _currentTarget = _targetAfterEndLevel;
         _myTween = transform.DOLookAt(new Vector3(_currentTarget.position.x - _offset.x, transform.position.y, _currentTarget.position.z + _offset.z), 3f);
 
