@@ -25,6 +25,6 @@ public class Platform : MonoBehaviour
         }
 
         _renderer.material.color = color;
-        _renderer.sharedMaterial.SetColor(ShadowColor, new Color(color.r + 0.15f, color.g, color.b + 0.15f, 1f));
+        _renderer.sharedMaterial.SetColor(ShadowColor, new Color(color.r + 0.17f, color.g, color.b + 0.17f, 1f));
     }
 }
