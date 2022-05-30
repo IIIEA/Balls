@@ -72,6 +72,6 @@ public class LevelGenerator : MonoBehaviour
 
         _activePlatforms.Add(platform);
 
-        _spawnPosition += platform.transform.localScale.x * 2 + 0.1f;
+        _spawnPosition += platform.transform.localScale.x * 2 + 0.2f;
     }
 }
